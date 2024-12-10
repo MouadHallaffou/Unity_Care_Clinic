@@ -17,6 +17,8 @@ CREATE TABLE doctors (
     email VARCHAR(100),
     department_id INT,
     FOREIGN KEY (department_id) REFERENCES departments (department_id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
 );
 
 CREATE TABLE patients (
@@ -43,9 +45,15 @@ CREATE TABLE prescription (
     medication_id INT,
     prescription_date DATE,
     dosage_instructions VARCHAR(255),
-    FOREIGN KEY (patient_id) REFERENCES patients (patient_id),
-    FOREIGN KEY (doctor_id) REFERENCES doctors (doctor_id),
+    FOREIGN KEY (patient_id) REFERENCES patients (patient_id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+    FOREIGN KEY (doctor_id) REFERENCES doctors (doctor_id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
     FOREIGN KEY (medication_id) REFERENCES medications (medication_id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
 );
 
 CREATE TABLE staff (
@@ -57,6 +65,8 @@ CREATE TABLE staff (
     email VARCHAR(100),
     department_id INT,
     FOREIGN KEY (department_id) REFERENCES departments (department_id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
 );
 
 CREATE TABLE appointments (
@@ -66,8 +76,12 @@ CREATE TABLE appointments (
     doctor_id INT,
     patient_id INT,
     reason VARCHAR(255),
-    FOREIGN KEY (patient_id) REFERENCES patients (patient_id),
+    FOREIGN KEY (patient_id) REFERENCES patients (patient_id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
     FOREIGN KEY (doctor_id) REFERENCES doctors (doctor_id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
 );
 
 CREATE TABLE rooms (
@@ -83,6 +97,10 @@ CREATE TABLE admissions (
     room_id INT,
     admission_date DATE,
     discharge_date DATE,
-    FOREIGN KEY (patient_id) REFERENCES patients (patient_id),
+    FOREIGN KEY (patient_id) REFERENCES patients (patient_id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
     FOREIGN KEY (room_id) REFERENCES rooms (room_id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
 );

@@ -56,21 +56,69 @@ USE schema_clinic;
 SELECT COUNT(*) AS Total_rendez_vous FROM patients;
 
 --11. COUNT avec GROUP BY : Nombre de médecins par département Comptez le nombre de médecins dans chaque département.
+USE schema_clinic;
+SELECT specialisation, COUNT(specialisation) AS Total_doctors from doctors
+GROUP BY specialisation;
 
 --12. AVG : Âge moyen des patients Calculez l'âge moyen des patients.
+USE schema_clinic;
+SELECT 
+AVG(YEAR (CURDATE()) - YEAR (date_of_birth)) AS averge_age 
+FROM  patients;
 
 --13. MAX : Dernier rendez-vous Trouvez la date et l'heure du dernier rendez-vous enregistré.
+USE schema_clinic;
+SELECT appointment_date AS dernieredate,
+appointment_time AS dernieretime
+FROM appointments
+
+ORDER BY 
+appointment_date DESC,
+appointment_time DESC
+LIMIT 1;
 
 --14. SUM : Total des admissions par chambre Calculez le total des admissions pour chaque chambre.
+USE schema_clinic;
+SELECT room_id, COUNT(*) AS total_admission
+from admissions 
+GROUP BY room_id;
 
 --15. Constraints : Vérifier les patients sans e-mail Récupérez tous les patients dont le champ email est vide.
+USE schema_clinic;
+SELECT * FROM patients 
+WHERE email = 'null';
 
 --16. Jointure : Liste des rendez-vous avec noms des médecins et patients Récupérez les rendez-vous avec les noms des médecins et des patients.
+USE schema_clinic;
+SELECT 
+patients.last_name AS patients_last_name, 
+patients.first_name AS patientsfirst_name, 
+date_of_birth,
+doctors.first_name AS doctor_first_name,
+doctors.last_name AS doctor_last_name,
+specialisation,
+dosage_instructions FROM patients
+JOIN doctors 
+ON  patients.patient_id = doctors.doctor_id
+JOIN prescription
+ON patients.patient_id = prescription.patient_id;
 
 --17. DELETE : Supprimer les rendez-vous avant 2024 Supprimez tous les rendez-vous programmés avant 2024.
+USE schema_clinic;
+delete from prescription
+WHERE prescription_date > '2024-12-31';
 
 --18. UPDATE : Modifier un département Changez le nom du département "Oncology" en "Cancer Treatment".
+USE schema_clinic;
+UPDATE departments
+SET department_name = 'Cancer Treatment'
+WHERE department_name = 'Oncology'
 
 --19. HAVING Clause : Patients par sexe avec au moins 2 entrées Listez les genres ayant au moins deux patients.
+USE schema_clinic;
+SELECT gendre, COUNT(*) AS total_gender 
+FROM patients
+GROUP BY gendre
+HAVING total_gender > 2;
 
 --20. Créer une vue : Admissions actives Créez une vue listant toutes les admissions en cours
