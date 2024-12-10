@@ -122,3 +122,33 @@ GROUP BY gendre
 HAVING total_gender > 2;
 
 --20. Créer une vue : Admissions actives Créez une vue listant toutes les admissions en cours
+USE schema_clinic;
+CREATE VIEW AdmissionsView AS 
+SELECT admission_id, patient_id, room_id, admission_date, discharge_date
+FROM admissions;
+
+--Bonus 1 : Patients et leurs médecins traitants Récupérez les noms des patients et les noms de leurs médecins traitants à partir des tables patients, admissions, et doctors.
+SELECT 
+    patients.first_name AS first_name_patient,
+    patients.last_name AS last_name_patient,
+    doctors.first_name AS doc_first_name,
+    doctors.last_name AS doc_last_name,
+    admissions.admission_id AS admission
+FROM patients
+JOIN prescription
+ON prescription.patient_id = patients.patient_id
+JOIN doctors
+ON doctors.doctor_id = prescription.doctor_id
+JOIN admissions
+ON admissions.patient_id = patients.patient_id;
+
+--Bonus 2 : Liste des rendez-vous par département Récupérez la liste des rendez-vous avec les départements associés.
+
+
+--Bonus 3 : Médicaments prescrits par médecin Listez les médicaments prescrits par chaque médecin.
+
+
+--Bonus 4 : Admissions et leurs chambres associées Récupérez les informations des admissions et des chambres où les patients sont placés.
+
+
+--Bonus 5 : Statistiques des patients par département Comptez le nombre de patients associés à chaque département via leurs admissions.
