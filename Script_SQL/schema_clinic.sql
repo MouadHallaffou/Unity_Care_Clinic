@@ -13,8 +13,8 @@ CREATE TABLE doctors (
     first_name VARCHAR(50),
     last_name VARCHAR(50),
     specialisation VARCHAR(50),
-    phone_number VARCHAR(15),
-    email VARCHAR(100),
+    phone_number VARCHAR(15) UNIQUE,
+    email VARCHAR(100) UNIQUE,
     department_id INT,
     FOREIGN KEY (department_id) REFERENCES departments (department_id)
     ON UPDATE CASCADE
@@ -27,7 +27,7 @@ CREATE TABLE patients (
     last_name VARCHAR(50) NOT NULL,
     gendre VARCHAR(10) NOT NULL CHECK (gendre IN ('male', 'female', 'other')),
     date_of_birth DATE,
-    phone_number VARCHAR(15),
+    phone_number VARCHAR(15) UNIQUE,
     email VARCHAR(100),
     address VARCHAR(255)
 );
@@ -61,8 +61,8 @@ CREATE TABLE staff (
     first_name VARCHAR(50),
     last_name VARCHAR(50),
     job_title VARCHAR(50),
-    phone_number VARCHAR(15),
-    email VARCHAR(100),
+    phone_number VARCHAR(15) UNIQUE,
+    email VARCHAR(100) UNIQUE,
     department_id INT,
     FOREIGN KEY (department_id) REFERENCES departments (department_id)
     ON UPDATE CASCADE
