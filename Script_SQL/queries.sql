@@ -12,10 +12,10 @@ SELECT department_name, location FROM departments;
 USE schema_clinic;
 SELECT first_name, last_name, date_of_birth FROM patients
 ORDER BY date_of_birth DESC; -- trier par age croisante 
-
+--------------------------------------------------------
 USE schema_clinic;
 SELECT first_name, last_name, date_of_birth FROM patients
-ORDER BY date_of_birth DESC; --trier par date naissance croissante 
+ORDER BY date_of_birth ASC; --trier par date naissance croissante 
 
 --4  Filtrer les patients uniques par sexe (DISTINCT) Récupérez tous les sexes des patients enregistrés, sans doublons.
 USE schema_clinic;
@@ -29,7 +29,7 @@ LIMIT 3;
 --6. WHERE Clause : Patients nés après 2000 Récupérez les informations des patients nés après l'année 2000.
 USE schema_clinic; 
 SELECT * FROM patients 
-WHERE date_of_birth > '2000-01-01'
+WHERE date_of_birth >'2000-01-01';
 
 --7. Logical Operators : Médecins dans des départements spécifiques Récupérez les médecins des départements "Cardiology" et "Neurology".
 USE schema_clinic; 
@@ -143,7 +143,14 @@ JOIN admissions
 ON admissions.patient_id = patients.patient_id;
 
 --Bonus 2 : Liste des rendez-vous par département Récupérez la liste des rendez-vous avec les départements associés.
-
+USE schema_clinic;
+SELECT appointment_date, appointment_time, department_name,location FROM appointments
+JOIN patients
+ON patients.patient_id = appointments.patient_id
+JOIN doctors
+ON doctors.doctor_id = appointments.doctor_id
+JOIN departments
+ON doctors.department_id = departments.department_id;
 
 --Bonus 3 : Médicaments prescrits par médecin Listez les médicaments prescrits par chaque médecin.
 
